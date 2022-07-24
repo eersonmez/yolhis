@@ -8,36 +8,54 @@
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
 
-let map: google.maps.Map, heatmap: google.maps.visualization.HeatmapLayer;
+let map: google.maps.Map;
+let heatmap: google.maps.visualization.HeatmapLayer;
+let heatmap2: google.maps.visualization.HeatmapLayer;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
     zoom: 13,
     center: { lat: 37.775, lng: -122.434 },
     mapTypeId: "satellite",
+    mapTypeControl: false,
+    streetViewControl: false,
+    zoomControl: false,
+    fullscreenControl: false,
   });
 
+  let points = getPoints();
   heatmap = new google.maps.visualization.HeatmapLayer({
-    data: getPoints(),
+    data: points,
     map: map,
   });
+
+  heatmap2 = new google.maps.visualization.HeatmapLayer({
+    data: points.slice(0, points.length / 2),
+    map: map,
+  });
+
+  changeGradient();
 
   document
     .getElementById("toggle-heatmap")!
     .addEventListener("click", toggleHeatmap);
   document
     .getElementById("change-gradient")!
-    .addEventListener("click", changeGradient);
-  document
-    .getElementById("change-opacity")!
-    .addEventListener("click", changeOpacity);
-  document
-    .getElementById("change-radius")!
-    .addEventListener("click", changeRadius);
+    .addEventListener("click", toggleHeatmap2);
+  // document
+  //   .getElementById("change-opacity")!
+  //   .addEventListener("click", changeOpacity);
+  // document
+  //   .getElementById("change-radius")!
+  //   .addEventListener("click", changeRadius);
 }
 
 function toggleHeatmap(): void {
   heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function toggleHeatmap2(): void {
+  heatmap2.setMap(heatmap2.getMap() ? null : map);
 }
 
 function changeGradient(): void {
@@ -58,7 +76,7 @@ function changeGradient(): void {
     "rgba(255, 0, 0, 1)",
   ];
 
-  heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
+  heatmap2.set("gradient", gradient);
 }
 
 function changeRadius(): void {
