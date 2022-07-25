@@ -1,17 +1,11 @@
-# Google Maps JavaScript Sample
+# Teknofest 2022 Akilli Ulasim Projemiz
 
-This sample is generated from @googlemaps/js-samples located at
+Orjinal Google Maps api ornekleri reposu:
 https://github.com/googlemaps/js-samples.
 
-## Setup
+## Baslatmak icin
 
 ```sh
 npm i
-npm start  # development
-npm run build  # production
+npm start -- --port=8080
 ```
-
-## Feedback
-
-For feedback related to this sample, please open a new issue on
-[GitHub](https://github.com/googlemaps/js-samples/issues).
